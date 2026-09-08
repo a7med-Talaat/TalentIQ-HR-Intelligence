@@ -10,6 +10,12 @@
 
 ---
 
+## 💻 Project Demo :
+
+https://talentiq-hr-system.streamlit.app/
+
+---
+
 ## 📌 Project Highlights
 
 - **Predictive Intelligence**: LightGBM classifier tuned with Optuna and calibrated with **Isotonic Regression** to produce statistically accurate transition probabilities.

@@ -1,0 +1,49 @@
+{
+  "best_model": "LightGBM",
+  "selected_features": [
+    "city",
+    "city_development_index",
+    "relevent_experience",
+    "company_size",
+    "last_new_job",
+    "training_hours",
+    "enrolled_university_no_enrollment",
+    "major_discipline_STEM",
+    "major_discipline_Unknown",
+    "company_type_Funded Startup",
+    "company_type_Public Sector",
+    "company_type_Unknown",
+    "career_stability",
+    "edu_exp_interaction",
+    "stem_flag"
+  ],
+  "metrics": [
+    {
+      "model": "LightGBM",
+      "auc_roc": 0.8217,
+      "f1": 0.6393,
+      "precision": 0.5821,
+      "recall": 0.7089,
+      "roc_auc_computed": 0.8217,
+      "expected_calibration_error": 0.0
+    },
+    {
+      "model": "XGBoost",
+      "auc_roc": 0.8208,
+      "f1": 0.6375,
+      "precision": 0.5835,
+      "recall": 0.7026,
+      "roc_auc_computed": 0.8208,
+      "expected_calibration_error": 0.0
+    },
+    {
+      "model": "LogisticRegression",
+      "auc_roc": 0.811,
+      "f1": 0.5988,
+      "precision": 0.5746,
+      "recall": 0.6251,
+      "roc_auc_computed": 0.811,
+      "expected_calibration_error": 0.0
+    }
+  ]
+}

@@ -1,0 +1,422 @@
+[
+  {
+    "candidate_id": 32403,
+    "prediction": 0,
+    "probability": 0.0704,
+    "base_value": 2.285597,
+    "shap_values": [
+      {
+        "feature": "education_level",
+        "value": 2.0,
+        "shap": -0.678886
+      },
+      {
+        "feature": "company_size",
+        "value": 0.0,
+        "shap": -0.66041
+      },
+      {
+        "feature": "gender_Male",
+        "value": 1.0,
+        "shap": -0.599436
+      },
+      {
+        "feature": "enrolled_university_no_enrollment",
+        "value": 0.0,
+        "shap": -0.567585
+      },
+      {
+        "feature": "city",
+        "value": 0.2013,
+        "shap": -0.494734
+      },
+      {
+        "feature": "seniority_score",
+        "value": 7.443,
+        "shap": 0.360277
+      },
+      {
+        "feature": "relevent_experience",
+        "value": 1.0,
+        "shap": -0.360075
+      },
+      {
+        "feature": "career_stability",
+        "value": 0.0,
+        "shap": -0.167432
+      },
+      {
+        "feature": "major_discipline_Unknown",
+        "value": 0.0,
+        "shap": 0.136594
+      },
+      {
+        "feature": "company_type_Unknown",
+        "value": 1.0,
+        "shap": -0.118284
+      },
+      {
+        "feature": "gender_Unknown",
+        "value": 0.0,
+        "shap": -0.112782
+      },
+      {
+        "feature": "city_development_index",
+        "value": 0.827,
+        "shap": -0.087991
+      },
+      {
+        "feature": "company_type_Public Sector",
+        "value": 0.0,
+        "shap": -0.020634
+      },
+      {
+        "feature": "company_type_Funded Startup",
+        "value": 0.0,
+        "shap": -0.006533
+      },
+      {
+        "feature": "edu_exp_interaction",
+        "value": 18.0,
+        "shap": -0.004428
+      }
+    ],
+    "plot_path": "outputs\\shap_plots\\candidate_32403_shap.png"
+  },
+  {
+    "candidate_id": 9858,
+    "prediction": 0,
+    "probability": 0.1186,
+    "base_value": 2.285597,
+    "shap_values": [
+      {
+        "feature": "seniority_score",
+        "value": 4.6,
+        "shap": 0.932138
+      },
+      {
+        "feature": "company_type_Unknown",
+        "value": 0.0,
+        "shap": -0.760132
+      },
+      {
+        "feature": "city",
+        "value": 0.2125,
+        "shap": -0.75985
+      },
+      {
+        "feature": "relevent_experience",
+        "value": 1.0,
+        "shap": -0.426339
+      },
+      {
+        "feature": "education_level",
+        "value": 2.0,
+        "shap": -0.411799
+      },
+      {
+        "feature": "gender_Male",
+        "value": 0.0,
+        "shap": -0.323754
+      },
+      {
+        "feature": "company_size",
+        "value": 3.0,
+        "shap": -0.255008
+      },
+      {
+        "feature": "major_discipline_Unknown",
+        "value": 0.0,
+        "shap": 0.157182
+      },
+      {
+        "feature": "city_development_index",
+        "value": 0.92,
+        "shap": -0.147045
+      },
+      {
+        "feature": "gender_Unknown",
+        "value": 0.0,
+        "shap": -0.123993
+      },
+      {
+        "feature": "career_stability",
+        "value": 1.5,
+        "shap": -0.092467
+      },
+      {
+        "feature": "enrolled_university_no_enrollment",
+        "value": 1.0,
+        "shap": -0.090455
+      },
+      {
+        "feature": "company_type_Public Sector",
+        "value": 0.0,
+        "shap": -0.054277
+      },
+      {
+        "feature": "company_type_Funded Startup",
+        "value": 0.0,
+        "shap": -0.007907
+      },
+      {
+        "feature": "edu_exp_interaction",
+        "value": 10.0,
+        "shap": -0.003742
+      }
+    ],
+    "plot_path": "outputs\\shap_plots\\candidate_9858_shap.png"
+  },
+  {
+    "candidate_id": 31806,
+    "prediction": 1,
+    "probability": 0.5839,
+    "base_value": 2.285597,
+    "shap_values": [
+      {
+        "feature": "city",
+        "value": 0.5891,
+        "shap": 1.946306
+      },
+      {
+        "feature": "major_discipline_Unknown",
+        "value": 1.0,
+        "shap": -0.516037
+      },
+      {
+        "feature": "company_size",
+        "value": 3.0,
+        "shap": -0.494422
+      },
+      {
+        "feature": "company_type_Unknown",
+        "value": 0.0,
+        "shap": -0.281059
+      },
+      {
+        "feature": "city_development_index",
+        "value": 0.624,
+        "shap": -0.205485
+      },
+      {
+        "feature": "seniority_score",
+        "value": 0.0,
+        "shap": -0.119469
+      },
+      {
+        "feature": "relevent_experience",
+        "value": 0.0,
+        "shap": -0.099292
+      },
+      {
+        "feature": "education_level",
+        "value": 1.0,
+        "shap": -0.087314
+      },
+      {
+        "feature": "career_stability",
+        "value": 3.0,
+        "shap": -0.084666
+      },
+      {
+        "feature": "gender_Unknown",
+        "value": 0.0,
+        "shap": -0.082488
+      },
+      {
+        "feature": "enrolled_university_no_enrollment",
+        "value": 1.0,
+        "shap": -0.042726
+      },
+      {
+        "feature": "company_type_Public Sector",
+        "value": 0.0,
+        "shap": -0.040726
+      },
+      {
+        "feature": "gender_Male",
+        "value": 1.0,
+        "shap": -0.025034
+      },
+      {
+        "feature": "company_type_Funded Startup",
+        "value": 0.0,
+        "shap": -0.014759
+      },
+      {
+        "feature": "edu_exp_interaction",
+        "value": 0.0,
+        "shap": 0.008878
+      }
+    ],
+    "plot_path": "outputs\\shap_plots\\candidate_31806_shap.png"
+  },
+  {
+    "candidate_id": 27385,
+    "prediction": 0,
+    "probability": 0.0704,
+    "base_value": 2.285597,
+    "shap_values": [
+      {
+        "feature": "city",
+        "value": 0.1665,
+        "shap": -1.017198
+      },
+      {
+        "feature": "company_type_Unknown",
+        "value": 0.0,
+        "shap": -0.703881
+      },
+      {
+        "feature": "relevent_experience",
+        "value": 1.0,
+        "shap": -0.436361
+      },
+      {
+        "feature": "gender_Male",
+        "value": 1.0,
+        "shap": -0.367117
+      },
+      {
+        "feature": "company_size",
+        "value": 1.0,
+        "shap": -0.318774
+      },
+      {
+        "feature": "education_level",
+        "value": 3.0,
+        "shap": -0.106885
+      },
+      {
+        "feature": "city_development_index",
+        "value": 0.827,
+        "shap": -0.097337
+      },
+      {
+        "feature": "enrolled_university_no_enrollment",
+        "value": 1.0,
+        "shap": -0.092577
+      },
+      {
+        "feature": "gender_Unknown",
+        "value": 0.0,
+        "shap": -0.090983
+      },
+      {
+        "feature": "career_stability",
+        "value": 0.5,
+        "shap": -0.060445
+      },
+      {
+        "feature": "major_discipline_Unknown",
+        "value": 0.0,
+        "shap": 0.038747
+      },
+      {
+        "feature": "company_type_Public Sector",
+        "value": 0.0,
+        "shap": -0.036832
+      },
+      {
+        "feature": "seniority_score",
+        "value": 9.097,
+        "shap": -0.034753
+      },
+      {
+        "feature": "company_type_Funded Startup",
+        "value": 0.0,
+        "shap": -0.002925
+      },
+      {
+        "feature": "edu_exp_interaction",
+        "value": 33.0,
+        "shap": -0.001718
+      }
+    ],
+    "plot_path": "outputs\\shap_plots\\candidate_27385_shap.png"
+  },
+  {
+    "candidate_id": 27724,
+    "prediction": 0,
+    "probability": 0.0847,
+    "base_value": 2.285597,
+    "shap_values": [
+      {
+        "feature": "city",
+        "value": 0.2125,
+        "shap": -0.771582
+      },
+      {
+        "feature": "company_type_Unknown",
+        "value": 0.0,
+        "shap": -0.757564
+      },
+      {
+        "feature": "career_stability",
+        "value": 1.1667,
+        "shap": 0.487171
+      },
+      {
+        "feature": "relevent_experience",
+        "value": 1.0,
+        "shap": -0.380071
+      },
+      {
+        "feature": "gender_Male",
+        "value": 1.0,
+        "shap": -0.331656
+      },
+      {
+        "feature": "education_level",
+        "value": 2.0,
+        "shap": -0.305521
+      },
+      {
+        "feature": "company_size",
+        "value": 7.0,
+        "shap": -0.241492
+      },
+      {
+        "feature": "city_development_index",
+        "value": 0.92,
+        "shap": -0.195872
+      },
+      {
+        "feature": "seniority_score",
+        "value": 19.32,
+        "shap": -0.133683
+      },
+      {
+        "feature": "gender_Unknown",
+        "value": 0.0,
+        "shap": -0.084787
+      },
+      {
+        "feature": "enrolled_university_no_enrollment",
+        "value": 1.0,
+        "shap": -0.073612
+      },
+      {
+        "feature": "company_type_Public Sector",
+        "value": 0.0,
+        "shap": -0.050906
+      },
+      {
+        "feature": "major_discipline_Unknown",
+        "value": 0.0,
+        "shap": 0.038077
+      },
+      {
+        "feature": "company_type_Funded Startup",
+        "value": 0.0,
+        "shap": -0.005613
+      },
+      {
+        "feature": "edu_exp_interaction",
+        "value": 42.0,
+        "shap": -0.004971
+      }
+    ],
+    "plot_path": "outputs\\shap_plots\\candidate_27724_shap.png"
+  }
+]

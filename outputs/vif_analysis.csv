@@ -1,0 +1,31 @@
+feature,VIF,flagged
+experience,95.488,True
+seniority_score,91.815,True
+major_discipline_STEM,23.359,True
+edu_exp_interaction,21.378,True
+major_discipline_Unknown,11.719,True
+stem_flag,8.957,False
+company_type_Pvt Ltd,8.67,False
+company_type_Unknown,8.434,False
+city_development_index,8.02,False
+education_level,5.894,False
+city,4.925,False
+career_stability,4.499,False
+gender_Unknown,3.531,False
+gender_Male,3.511,False
+major_discipline_Humanities,3.424,False
+company_size,3.088,False
+last_new_job,3.021,False
+edu_vs_exp_ratio,2.868,False
+training_intensity,2.824,False
+major_discipline_Other,2.51,False
+company_type_Public Sector,2.447,False
+major_discipline_Business Degree,2.348,False
+company_type_Funded Startup,2.276,False
+major_discipline_No Major,1.925,False
+training_hours,1.905,False
+company_type_NGO,1.72,False
+enrolled_university_no_enrollment,1.712,False
+relevent_experience,1.633,False
+enrolled_university_Part time course,1.253,False
+enrolled_university_Unknown,1.097,False

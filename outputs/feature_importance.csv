@@ -1,0 +1,32 @@
+feature,rfe_rank
+city,1
+city_development_index,1
+relevent_experience,1
+education_level,1
+company_size,1
+enrolled_university_no_enrollment,1
+gender_Unknown,1
+gender_Male,1
+company_type_Unknown,1
+career_stability,1
+edu_exp_interaction,1
+seniority_score,1
+company_type_Funded Startup,1
+company_type_Public Sector,1
+major_discipline_Unknown,1
+company_type_Pvt Ltd,2
+training_hours,3
+enrolled_university_Unknown,4
+enrolled_university_Part time course,5
+experience,6
+edu_vs_exp_ratio,7
+major_discipline_Other,8
+gender_Other,9
+major_discipline_Business Degree,10
+major_discipline_Humanities,11
+last_new_job,12
+training_intensity,13
+company_type_NGO,14
+major_discipline_STEM,15
+stem_flag,16
+major_discipline_No Major,17

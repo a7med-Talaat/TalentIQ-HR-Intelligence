@@ -1,0 +1,10 @@
+﻿# Ensure Git treats binary files as binary without line ending conversion
+*.pkl binary
+*.pickle binary
+*.h5 binary
+*.joblib binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.pdf binary

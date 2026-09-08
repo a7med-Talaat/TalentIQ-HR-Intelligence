@@ -7,6 +7,7 @@
 [![SHAP](https://img.shields.io/badge/Explainability-SHAP-orange.svg)](https://shap.readthedocs.io/)
 
 > **TalentIQ** is an end-to-end Machine Learning and Decision Intelligence platform that identifies which candidates are genuinely ready to make a career transition and algorithmically ranks the **Top 10 recommended applicants** using Multi-Criteria Decision Analysis (MCDA) and Explainable AI (SHAP).
+> TalentIQ Team : Ahmed Talaat, Linda Nasser, Mohamed Ibrahim
 
 ---
 

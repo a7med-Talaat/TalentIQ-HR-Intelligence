@@ -10,10 +10,22 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, field_validator
 warnings.filterwarnings('ignore')
+
+import sys
+BASE_DIR = Path(__file__).resolve().parent
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+import data_preprocessing
+import feature_engineering
+import train_model
 from train_model import _IsotonicCalibratedModel
+from data_preprocessing import PreprocessingPipeline
+from feature_engineering import FeaturePipeline, FeatureEngineer
 from candidate_ranking import CandidateRankingEngine, STRATEGY_PRESETS
-MODELS_DIR = Path('Trained_Model')
-DATA_DIR = Path('Datasets')
+
+MODELS_DIR = BASE_DIR / 'Trained_Model'
+DATA_DIR = BASE_DIR / 'Datasets'
 
 class CandidateInput(BaseModel):
     enrollee_id: Optional[int] = Field(None, description='Unique candidate identifier')

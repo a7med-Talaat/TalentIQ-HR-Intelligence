@@ -1,3 +1,4 @@
+import sys
 import json
 import pickle
 import warnings
@@ -8,18 +9,29 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 warnings.filterwarnings('ignore')
+
+BASE_DIR = Path(__file__).resolve().parent
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+import data_preprocessing
+import feature_engineering
+import train_model
 from train_model import _IsotonicCalibratedModel
+from data_preprocessing import PreprocessingPipeline
+from feature_engineering import FeaturePipeline, FeatureEngineer
 from candidate_ranking import CandidateRankingEngine, STRATEGY_PRESETS
-MODELS_DIR = Path('Trained_Model')
-OUTPUTS_DIR = Path('outputs')
-DATA_DIR = Path('Datasets')
+
+MODELS_DIR = BASE_DIR / 'Trained_Model'
+OUTPUTS_DIR = BASE_DIR / 'outputs'
+DATA_DIR = BASE_DIR / 'Datasets'
+
 st.set_page_config(page_title='TalentIQ · Candidate Intelligence', page_icon='⚡', layout='wide', initial_sidebar_state='expanded')
 st.markdown('\n<style>\n    @import url(\'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap\');\n    html, body, [class*="css"] { font-family: \'Plus Jakarta Sans\', sans-serif; }\n    .stApp { background: radial-gradient(circle at 10% 20%, #0d1322 0%, #080c15 90%); color: #f1f5f9; }\n\n    /* KPI Summary Cards */\n    .kpi-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }\n    .kpi-card { background: #131b2e; border: 1px solid #232f48; border-radius: 14px; padding: 1.25rem 1.5rem; }\n    .kpi-label { font-size: 0.8rem; text-transform: uppercase; color: #94a3b8; font-weight: 600; }\n    .kpi-value { font-size: 2rem; font-weight: 800; color: #ffffff; margin: 0.2rem 0; }\n    .kpi-sub { font-size: 0.8rem; color: #34d399; font-weight: 600; }\n\n    /* Top 3 Podium Cards */\n    .podium-card { border-radius: 16px; padding: 1.25rem; margin-bottom: 1rem; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); }\n    .podium-1 { border: 1.5px solid #f59e0b; background: linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%); }\n    .podium-2 { border: 1.5px solid #94a3b8; background: linear-gradient(180deg, rgba(148, 163, 184, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%); }\n    .podium-3 { border: 1.5px solid #d97706; background: linear-gradient(180deg, rgba(217, 119, 6, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%); }\n\n    /* Badges & Tags */\n    .pill-tag { display: inline-block; background: rgba(99, 102, 241, 0.12); color: #c7d2fe; border: 1px solid rgba(99, 102, 241, 0.25); border-radius: 6px; padding: 0.15rem 0.5rem; font-size: 0.72rem; margin: 0.15rem 0.2rem 0.15rem 0; }\n    .badge-gold   { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); padding: 0.2rem 0.6rem; border-radius: 999px; font-weight: 700; font-size: 0.75rem; }\n    .badge-silver { background: rgba(148, 163, 184, 0.2); color: #e2e8f0; border: 1px solid rgba(148, 163, 184, 0.4); padding: 0.2rem 0.6rem; border-radius: 999px; font-weight: 700; font-size: 0.75rem; }\n    .badge-bronze { background: rgba(217, 119, 6, 0.2); color: #f97316; border: 1px solid rgba(217, 119, 6, 0.4); padding: 0.2rem 0.6rem; border-radius: 999px; font-weight: 700; font-size: 0.75rem; }\n</style>\n', unsafe_allow_html=True)
 
 @st.cache_resource(show_spinner='Loading trained model...')
 def load_artifacts():
     try:
-
         def _load_pkl(name):
             with open(MODELS_DIR / name, 'rb') as f:
                 return pickle.load(f)
@@ -27,8 +39,16 @@ def load_artifacts():
             selected_features = json.load(f)
         with open(MODELS_DIR / 'model_metrics.json') as f:
             metadata = json.load(f)
-        return {'preprocessor': _load_pkl('preprocessor.pkl'), 'feature_pipeline': _load_pkl('feature_pipeline.pkl'), 'best_model': _load_pkl('best_model.pkl'), 'selected_features': selected_features, 'best_model_name': metadata.get('best_model', 'Calibrated Classifier'), 'metrics': metadata.get('metrics', [])}
-    except Exception:
+        return {
+            'preprocessor': _load_pkl('preprocessor.pkl'),
+            'feature_pipeline': _load_pkl('feature_pipeline.pkl'),
+            'best_model': _load_pkl('best_model.pkl'),
+            'selected_features': selected_features,
+            'best_model_name': metadata.get('best_model', 'Calibrated Classifier'),
+            'metrics': metadata.get('metrics', [])
+        }
+    except Exception as err:
+        st.error(f"Error loading model artifacts: {err}")
         return None
 
 @st.cache_resource(show_spinner='Initializing SHAP explainer...')

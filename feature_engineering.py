@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 warnings.filterwarnings('ignore')
 
+# --- Step 1: Feature Engineering Transformer ---
 class FeatureEngineer:
 
     def fit(self, X, y=None):
@@ -16,11 +17,13 @@ class FeatureEngineer:
         comp = X['company_size'].astype(float)
         lnj = X['last_new_job'].astype(float)
         cdi = X['city_development_index'].astype(float)
+
         X['training_intensity'] = hrs / (exp + 1.0)
         X['edu_vs_exp_ratio'] = edu / (exp + 1.0)
         X['career_stability'] = comp / (lnj + 1.0)
         X['seniority_score'] = exp * cdi
         X['edu_exp_interaction'] = edu * exp
+
         if 'major_discipline_STEM' in X.columns:
             X['stem_flag'] = X['major_discipline_STEM'].astype(int)
         elif 'major_discipline' in X.columns:
@@ -29,6 +32,8 @@ class FeatureEngineer:
             X['stem_flag'] = 0
         return X
 
+
+# --- Step 2: Sequential Feature Pipeline ---
 class FeaturePipeline:
 
     def __init__(self, steps):
@@ -52,11 +57,23 @@ class FeaturePipeline:
     def get_params(self, deep=True):
         return {'steps': self.steps}
 
+
+# --- Step 3: Pipeline Builder & Execution ---
 def build_feature_pipeline():
     return FeaturePipeline(steps=[('engineer', FeatureEngineer())])
-ENGINEERED_FEATURE_NAMES = ['training_intensity', 'edu_vs_exp_ratio', 'career_stability', 'seniority_score', 'edu_exp_interaction', 'stem_flag']
+
+ENGINEERED_FEATURE_NAMES = [
+    'training_intensity',
+    'edu_vs_exp_ratio',
+    'career_stability',
+    'seniority_score',
+    'edu_exp_interaction',
+    'stem_flag'
+]
+
 if __name__ == '__main__':
     from data_preprocessing import preprocess
+    print("Running feature engineering...")
     data = preprocess(data_dir='Datasets', apply_smote=False)
     pipe = build_feature_pipeline()
     transformed = pipe.fit_transform(data['X_train'])

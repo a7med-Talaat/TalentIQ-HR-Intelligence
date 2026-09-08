@@ -12,6 +12,8 @@ from sklearn.metrics import roc_auc_score, f1_score, precision_score, recall_sco
 warnings.filterwarnings('ignore')
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 
+
+# --- Step 1: Probability Calibration Wrapper ---
 class _IsotonicCalibratedModel:
 
     def __init__(self, base_model):
@@ -31,6 +33,8 @@ class _IsotonicCalibratedModel:
     def predict(self, X):
         return (self.predict_proba(X)[:, 1] >= 0.5).astype(int)
 
+
+# --- Step 2: Optuna Objective Functions ---
 def _lgbm_objective(trial, X_tr, y_tr, X_val, y_val):
     params = {
         'objective': 'binary',
@@ -101,57 +105,100 @@ def _build_xgb(params):
 def _build_lr(params):
     return LogisticRegression(**params, max_iter=1000, random_state=42)
 
+# --- Step 3: Model Evaluation Metrics ---
 def _evaluate(model, X, y, name):
     prob = model.predict_proba(X)[:, 1]
     pred = (prob >= 0.5).astype(int)
-    return {'model': name, 'auc_roc': round(float(roc_auc_score(y, prob)), 4), 'f1': round(float(f1_score(y, pred)), 4), 'precision': round(float(precision_score(y, pred, zero_division=0)), 4), 'recall': round(float(recall_score(y, pred)), 4)}
+    return {
+        'model': name,
+        'auc_roc': round(float(roc_auc_score(y, prob)), 4),
+        'f1': round(float(f1_score(y, pred)), 4),
+        'precision': round(float(precision_score(y, pred, zero_division=0)), 4),
+        'recall': round(float(recall_score(y, pred)), 4)
+    }
 
+
+# --- Step 4: Full Automated Training Pipeline ---
 def train(data_dir='Datasets', n_trials=50, feature_selection_method='rfe', rfe_n=15, save_dir='Trained_Model', output_dir='outputs'):
     from data_preprocessing import preprocess
     from feature_engineering import build_feature_pipeline
     from feature_selection import select_features
+
     Path(save_dir).mkdir(parents=True, exist_ok=True)
     Path(output_dir).mkdir(parents=True, exist_ok=True)
+
     prep = preprocess(data_dir=data_dir, apply_smote=True, save_preprocessor=True, models_dir=save_dir)
-    X_tr, y_tr = (prep['X_train'], prep['y_train'])
-    X_val, y_val = (prep['X_val'], prep['y_val'])
+    X_tr = prep['X_train']
+    y_tr = prep['y_train']
+    X_val = prep['X_val']
+    y_val = prep['y_val']
+
     feat_pipe = build_feature_pipeline()
     X_tr = feat_pipe.fit_transform(X_tr)
     X_val = feat_pipe.transform(X_val)
+
     with open(Path(save_dir) / 'feature_pipeline.pkl', 'wb') as f:
         pickle.dump(feat_pipe, f)
+
     sel = select_features(X_tr, y_tr, method=feature_selection_method, rfe_n=rfe_n, output_dir=output_dir, save_selector=True, models_dir=save_dir)
     selected = sel['selected_features']
+
     with open(Path(save_dir) / 'selected_features.json', 'w') as f:
         json.dump(selected, f)
+
     X_tr_s = X_tr[selected].values
     X_val_s = X_val[[c for c in selected if c in X_val.columns]].values
-    y_tr_arr, y_val_arr = (y_tr.values, y_val.values)
-    model_configs = [('LightGBM', _lgbm_objective, _build_lgbm), ('XGBoost', _xgb_objective, _build_xgb), ('LogisticRegression', _lr_objective, _build_lr)]
-    trained_models, all_metrics = ({}, [])
+    y_tr_arr = y_tr.values
+    y_val_arr = y_val.values
+
+    model_configs = [
+        ('LightGBM', _lgbm_objective, _build_lgbm),
+        ('XGBoost', _xgb_objective, _build_xgb),
+        ('LogisticRegression', _lr_objective, _build_lr)
+    ]
+
+    trained_models = {}
+    all_metrics = []
+
     for name, obj_fn, builder_fn in model_configs:
         print(f'Tuning {name}...')
         study = optuna.create_study(direction='maximize', study_name=name)
-        study.optimize(lambda trial, o=obj_fn: o(trial, X_tr_s, y_tr_arr, X_val_s, y_val_arr), n_trials=n_trials, show_progress_bar=False)
+
+        def objective(trial):
+            return obj_fn(trial, X_tr_s, y_tr_arr, X_val_s, y_val_arr)
+
+        study.optimize(objective, n_trials=n_trials, show_progress_bar=False)
+
         raw_model = builder_fn(study.best_params)
         raw_model.fit(X_tr_s, y_tr_arr)
+
         cal_model = _IsotonicCalibratedModel(raw_model)
         cal_model.fit(X_val_s, y_val_arr)
+
         metrics = _evaluate(cal_model, X_val_s, y_val_arr, name)
         all_metrics.append(metrics)
         trained_models[name] = cal_model
         print(f"  AUC-ROC: {metrics['auc_roc']}")
+
         slug = name.lower().replace(' ', '_')
         with open(Path(save_dir) / f'{slug}_model.pkl', 'wb') as f:
             pickle.dump(cal_model, f)
+
     best_name = max(all_metrics, key=lambda m: m['auc_roc'])['model']
-    print(f'\nBest model: {best_name}')
+    print(f'\\nBest model: {best_name}')
+
     with open(Path(save_dir) / 'best_model.pkl', 'wb') as f:
         pickle.dump(trained_models[best_name], f)
+
     metadata = {'best_model': best_name, 'selected_features': selected, 'metrics': all_metrics}
     with open(Path(save_dir) / 'model_metrics.json', 'w') as f:
         json.dump(metadata, f, indent=2)
+
     return {'models': trained_models, 'metrics': all_metrics, 'best': best_name, 'features': selected}
+
+
+# --- Step 5: Standalone Training Execution ---
 if __name__ == '__main__':
+    print("Starting model training pipeline...")
     res = train(n_trials=10)
     print(f"Training completed. Champion model: {res['best']}")

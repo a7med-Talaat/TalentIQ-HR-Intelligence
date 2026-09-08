@@ -81,7 +81,7 @@
         "shap": -0.004428
       }
     ],
-    "plot_path": "outputs\\shap_plots\\candidate_32403_shap.png"
+    "plot_path": "outputs/shap_plots/candidate_32403_shap.png"
   },
   {
     "candidate_id": 9858,
@@ -165,7 +165,7 @@
         "shap": -0.003742
       }
     ],
-    "plot_path": "outputs\\shap_plots\\candidate_9858_shap.png"
+    "plot_path": "outputs/shap_plots/candidate_9858_shap.png"
   },
   {
     "candidate_id": 31806,
@@ -249,7 +249,7 @@
         "shap": 0.008878
       }
     ],
-    "plot_path": "outputs\\shap_plots\\candidate_31806_shap.png"
+    "plot_path": "outputs/shap_plots/candidate_31806_shap.png"
   },
   {
     "candidate_id": 27385,
@@ -333,7 +333,7 @@
         "shap": -0.001718
       }
     ],
-    "plot_path": "outputs\\shap_plots\\candidate_27385_shap.png"
+    "plot_path": "outputs/shap_plots/candidate_27385_shap.png"
   },
   {
     "candidate_id": 27724,
@@ -417,6 +417,6 @@
         "shap": -0.004971
       }
     ],
-    "plot_path": "outputs\\shap_plots\\candidate_27724_shap.png"
+    "plot_path": "outputs/shap_plots/candidate_27724_shap.png"
   }
 ]

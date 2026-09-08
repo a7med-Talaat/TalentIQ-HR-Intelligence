@@ -8,6 +8,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 warnings.filterwarnings('ignore')
 
+
+# --- Step 1: Multicollinearity Diagnosis (VIF) ---
 def compute_vif(X, threshold=10.0):
     try:
         from statsmodels.stats.outliers_influence import variance_inflation_factor
@@ -25,6 +27,8 @@ def compute_vif(X, threshold=10.0):
     except ImportError:
         return pd.DataFrame(columns=['feature', 'VIF', 'flagged'])
 
+
+# --- Step 2: Feature Selection Suite ---
 def select_features(X, y, method='rfe', variance_threshold=0.01, mi_k=20, rfe_n=None, output_dir='outputs', save_selector=False, models_dir='Trained_Model'):
     Path(output_dir).mkdir(parents=True, exist_ok=True)
     var_filter = VarianceThreshold(threshold=variance_threshold)
@@ -77,9 +81,11 @@ def select_features(X, y, method='rfe', variance_threshold=0.01, mi_k=20, rfe_n=
         with open(Path(models_dir) / f'feature_selector_{method}.pkl', 'wb') as f:
             pickle.dump({'selector': selector, 'var_selector': var_filter}, f)
     return {'selected_features': selected, 'selector': selector, 'var_selector': var_filter, 'importance_df': importance_df, 'vif_df': vif_df}
+# --- Step 3: Standalone Execution ---
 if __name__ == '__main__':
     from data_preprocessing import preprocess
     from feature_engineering import build_feature_pipeline
+    print("Running feature selection...")
     data = preprocess(data_dir='Datasets', apply_smote=False)
     X_eng = build_feature_pipeline().fit_transform(data['X_train'])
     res = select_features(X_eng, data['y_train'], method='rfe', rfe_n=15)

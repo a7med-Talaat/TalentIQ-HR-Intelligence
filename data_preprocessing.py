@@ -6,6 +6,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 warnings.filterwarnings('ignore')
+
+# --- Step 1: Define Column Groups and Value Maps ---
 TARGET_COL = 'target'
 DROP_COLS = ['enrollee_id']
 CITY_COL = 'city'
@@ -45,6 +47,7 @@ LAST_NEW_JOB_MAP = {
 ORDINAL_MAPS = [EDUCATION_MAP, EXPERIENCE_MAP, COMPANY_SIZE_MAP, LAST_NEW_JOB_MAP]
 BINARY_MAP = {'Has relevent experience': 1, 'No relevent experience': 0}
 
+# --- Step 2: Preprocessing Pipeline Class ---
 class PreprocessingPipeline:
 
     def fit(self, X, y):
@@ -89,6 +92,8 @@ class PreprocessingPipeline:
     def get_feature_names_out(self):
         return getattr(self, '_last_col_names', [])
 
+
+# --- Step 3: Raw Data Loader ---
 def load_raw(data_dir='Datasets'):
     root = Path(data_dir)
     train_path = root / '1_Raw_Data' / 'aug_train.csv'
@@ -99,6 +104,8 @@ def load_raw(data_dir='Datasets'):
         test_path = root / 'aug_test.csv'
     return (pd.read_csv(train_path), pd.read_csv(test_path))
 
+
+# --- Step 4: Full Preprocessing Pipeline ---
 def preprocess(data_dir='Datasets', test_size=0.2, random_state=42, apply_smote=True, smote_k=5, save_preprocessor=False, models_dir='Trained_Model'):
     train_raw, test_raw = load_raw(data_dir)
     X = train_raw.drop(columns=[TARGET_COL])
@@ -120,6 +127,9 @@ def preprocess(data_dir='Datasets', test_size=0.2, random_state=42, apply_smote=
         with open(out_dir / 'preprocessor.pkl', 'wb') as f:
             pickle.dump(preprocessor, f)
     return {'X_train': X_tr, 'X_val': X_val, 'y_train': y_tr, 'y_val': y_val, 'X_test': X_test, 'preprocessor': preprocessor, 'feature_names': feature_names}
+
+
 if __name__ == '__main__':
+    print("Running data preprocessing...")
     res = preprocess(save_preprocessor=False)
     print(f"Preprocessed train shape: {res['X_train'].shape}, Features: {len(res['feature_names'])}")

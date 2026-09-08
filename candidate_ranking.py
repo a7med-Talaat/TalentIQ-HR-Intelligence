@@ -5,9 +5,24 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 warnings.filterwarnings('ignore')
-STRATEGY_PRESETS = {'balanced': {'intent': 0.35, 'experience': 0.25, 'education': 0.2, 'training': 0.1, 'relevance': 0.1}, 'senior': {'intent': 0.2, 'experience': 0.4, 'education': 0.25, 'training': 0.05, 'relevance': 0.1}, 'fast_hire': {'intent': 0.6, 'experience': 0.15, 'education': 0.1, 'training': 0.05, 'relevance': 0.1}, 'high_growth': {'intent': 0.25, 'experience': 0.15, 'education': 0.15, 'training': 0.35, 'relevance': 0.1}}
-EDU_SCORE_MAP = {'Phd': 1.0, 'Masters': 0.88, 'Graduate': 0.7, 'High School': 0.4, 'Primary School': 0.2}
 
+# --- Step 1: Strategy Presets and Maps ---
+STRATEGY_PRESETS = {
+    'balanced': {'intent': 0.35, 'experience': 0.25, 'education': 0.20, 'training': 0.10, 'relevance': 0.10},
+    'senior': {'intent': 0.20, 'experience': 0.40, 'education': 0.25, 'training': 0.05, 'relevance': 0.10},
+    'fast_hire': {'intent': 0.60, 'experience': 0.15, 'education': 0.10, 'training': 0.05, 'relevance': 0.10},
+    'high_growth': {'intent': 0.25, 'experience': 0.15, 'education': 0.15, 'training': 0.35, 'relevance': 0.10}
+}
+EDU_SCORE_MAP = {
+    'Phd': 1.0,
+    'Masters': 0.88,
+    'Graduate': 0.70,
+    'High School': 0.40,
+    'Primary School': 0.20
+}
+
+
+# --- Step 2: Experience String Parser ---
 def parse_experience(val):
     if pd.isna(val):
         return 5.0
@@ -21,6 +36,8 @@ def parse_experience(val):
     except ValueError:
         return 5.0
 
+
+# --- Step 3: Candidate Ranking Engine ---
 class CandidateRankingEngine:
 
     def __init__(self, default_strategy='balanced'):
@@ -147,6 +164,9 @@ class CandidateRankingEngine:
         if 'has' in str(rel).lower():
             items.append('Domain-relevant experience')
         return items[:4]
+
+
+# --- Step 4: Standalone Ranking Test ---
 if __name__ == '__main__':
     print('Testing CandidateRankingEngine...')
     models_dir = Path('Trained_Model')

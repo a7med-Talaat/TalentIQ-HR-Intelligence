@@ -26,7 +26,7 @@ https://talentiq-hr-system.streamlit.app/
   - **FastAPI Backend**: Production REST API with Swagger documentation (`http://localhost:8000/docs`).
   - **Streamlit Dashboard**: Recruiter visual control center featuring podiums, competency radar charts, and a 360° candidate inspector (`http://localhost:8501`).
 - **Comprehensive Project Report**: Full technical specification and defense prep available as [PROJECT_REPORT.pdf](./PROJECT_REPORT.pdf).
-- **Project Idea Presentation: Complete overview of the TalentIQ concept, problem statement, solution, methodology, and expected impact available as [PROJECT_PRESENTATION.pdf](./TalentIQ Presentation.pdf).
+- **Project Idea Presentation: Complete overview of the TalentIQ concept, problem statement, solution, methodology, and expected impact available as [PROJECT_PRESENTATION.pdf](./TalentIQ_Presentation.pdf).
 
 ---
 
